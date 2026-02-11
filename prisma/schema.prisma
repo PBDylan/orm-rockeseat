@@ -1,14 +1,16 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client-js" // Prisma utilizado para conectar com a base de dados
 }
 
-datasource db {
+datasource db { // Configuração da fonte de dados, indicando o tipo de banco de dados e a URL de conexão
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid()) // Campo de ID do usuário, String, com valor padrão gerado como UUID (hash único para cada usuário)
+  name String
+  email String @unique // Campo de email do usuário, String, com restrição de unicidade para evitar duplicatas
+
+  @@map("users") // Mapeamento do modelo para a tabela "users" no banco de dados
 }
